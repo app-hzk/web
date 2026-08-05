@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HZK Digital | Web App & Template</title>
+    
+    <!-- Tailwind CSS untuk Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font dan Icon -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8f9fa; /* Warna latar bersih bergaya aplikasi */
+        }
+        
+        /* Desain Kartu ala Android */
+        .android-card { 
+            background: #ffffff; 
+            border-radius: 16px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04); 
+        }
+        
+        /* Bottom Navigation Bar */
+        .bottom-nav { 
+            border-top: 1px solid #f1f5f9; 
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        
+        /* Logic untuk memindah halaman tanpa reload (Single Page) */
+        .page-section { display: none; animation: fadeIn 0.3s ease; }
+        .page-section.active { display: block; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="text-slate-800 pb-20">
+
+    <!-- TOP APP BAR -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 px-4 py-3.5 flex justify-between items-center">
+        <div class="font-bold text-lg tracking-tight text-blue-600">hzk.my.id</div>
+        <!-- Indikator kesiapan database Google Sheets -->
+        <div class="text-[10px] font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full flex items-center">
+            <span class="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5"></span> Sheets Ready
+        </div>
+    </header>
+
+    <!-- AREA KONTEN UTAMA -->
+    <main class="max-w-md mx-auto mt-5 px-4">
+        
+        <!-- 1. HALAMAN HOME / LANDING PAGE -->
+        <section id="home" class="page-section active">
+            <div class="android-card p-6 mb-5 text-center">
+                <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl mx-auto flex items-center justify-center mb-4">
+                    <i class="bi bi-rocket-takeoff text-2xl"></i>
+                </div>
+                <h1 class="text-xl font-bold mb-2 text-slate-900">Solusi Digital Bisnis</h1>
+                <p class="text-sm text-slate-500 mb-5 leading-relaxed">Tingkatkan produktivitas dengan Web App dan sistem terintegrasi yang mudah digunakan.</p>
+                <button onclick="nav('katalog')" class="bg-blue-600 active:bg-blue-700 text-white px-6 py-2.5 rounded-full text-sm font-semibold w-full transition-colors">
+                    Lihat Produk
+                </button>
+            </div>
+        </section>
+
+        <!-- 2. HALAMAN KATALOG -->
+        <section id="katalog" class="page-section">
+            <div class="flex justify-between items-end mb-4">
+                <h2 class="font-bold text-lg text-slate-900">Katalog Produk</h2>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3.5">
+                <!-- Contoh Kartu Produk 1 -->
+                <div class="android-card p-3 cursor-pointer active:scale-95 transition-transform" onclick="nav('demo')">
+                    <div class="bg-slate-50 h-28 rounded-xl mb-3 flex flex-col items-center justify-center border border-slate-100">
+                        <i class="bi bi-file-earmark-spreadsheet text-3xl text-emerald-500 mb-1"></i>
+                    </div>
+                    <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md mb-1.5 inline-block">Template</span>
+                    <h3 class="font-semibold text-sm leading-tight text-slate-800 line-clamp-2">Sistem Keuangan & Transaksi</h3>
+                </div>
+                
+                <!-- Contoh Kartu Produk 2 -->
+                <div class="android-card p-3 cursor-pointer active:scale-95 transition-transform" onclick="nav('demo')">
+                    <div class="bg-slate-50 h-28 rounded-xl mb-3 flex flex-col items-center justify-center border border-slate-100">
+                        <i class="bi bi-app-indicator text-3xl text-blue-500 mb-1"></i>
+                    </div>
+                    <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md mb-1.5 inline-block">Web App</span>
+                    <h3 class="font-semibold text-sm leading-tight text-slate-800 line-clamp-2">Aplikasi Kasir V5.0.9</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. HALAMAN DEMO & DETAIL PRODUK -->
+        <section id="demo" class="page-section">
+            <button onclick="nav('katalog')" class="text-sm text-slate-500 mb-4 flex items-center font-medium active:text-slate-700">
+                <i class="bi bi-chevron-left mr-1"></i> Kembali
+            </button>
+            
+            <div class="android-card p-5 mb-4">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-md uppercase tracking-wider">Web App</span>
+                    <span class="text-xs font-bold text-slate-800">Rp 150.000</span>
+                </div>
+                
+                <h2 class="font-bold text-xl text-slate-900 mb-2">Aplikasi Kasir V5.0.9</h2>
+                <p class="text-xs text-slate-500 mb-5 leading-relaxed">Aplikasi ringan dengan antarmuka yang dioptimalkan untuk perangkat seluler. Mendukung pencetakan struk dan laporan harian.</p>
+                
+                <div class="flex gap-2 mb-4">
+                    <button class="flex-1 bg-slate-900 text-white py-2.5 rounded-xl text-xs font-semibold flex justify-center items-center">
+                        <i class="bi bi-play-fill text-lg mr-1"></i> Live Demo
+                    </button>
+                    <button class="flex-1 border border-slate-200 text-slate-700 py-2.5 rounded-xl text-xs font-semibold flex justify-center items-center">
+                        <i class="bi bi-file-earmark-pdf mr-1.5 text-red-500"></i> Lihat PDF
+                    </button>
+                </div>
+                
+                <hr class="border-slate-100 my-4">
+                
+                <!-- Dropdown Catatan Pembaruan (Changelog) -->
+                <details class="text-sm group">
+                    <summary class="font-semibold text-slate-700 cursor-pointer outline-none list-none flex justify-between items-center">
+                        Catatan Pembaruan
+                        <i class="bi bi-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
+                    </summary>
+                    <div class="mt-3 bg-slate-50 rounded-xl p-3 border border-slate-100">
+                        <ul class="text-slate-600 text-xs space-y-2 relative pl-2 before:absolute before:left-0 before:top-1 before:bottom-1 before:w-[2px] before:bg-slate-200">
+                            <li class="relative pl-3 before:absolute before:-left-[5px] before:top-1.5 before:w-2 before:h-2 before:bg-blue-500 before:rounded-full">
+                                <span class="font-semibold text-slate-800">v5.0.9:</span> Perbaikan kompatibilitas PDF viewer pada browser seluler.
+                            </li>
+                            <li class="relative pl-3 before:absolute before:-left-[5px] before:top-1.5 before:w-2 before:h-2 before:bg-slate-300 before:rounded-full">
+                                <span class="font-semibold text-slate-800">v5.0.8:</span> Penyesuaian layout navigation card agar lebih responsif.
+                            </li>
+                        </ul>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <!-- 4. HALAMAN COMPANY PROFILE -->
+        <section id="profil" class="page-section">
+            <h2 class="font-bold text-lg text-slate-900 mb-4">Profil Perusahaan</h2>
+            <div class="android-card p-5">
+                <div class="w-16 h-16 bg-slate-100 rounded-full mx-auto mb-3 flex items-center justify-center">
+                    <span class="font-bold text-xl text-slate-400">H</span>
+                </div>
+                <h3 class="text-center font-bold text-slate-900 mb-1">HZK Digital</h3>
+                <p class="text-center text-xs text-slate-500 mb-4">Bekasi, Jawa Barat</p>
+                
+                <div class="space-y-3 mt-5">
+                    <div class="flex items-start">
+                        <i class="bi bi-check-circle-fill text-blue-500 mt-0.5 mr-2"></i>
+                        <p class="text-xs text-slate-600 leading-relaxed"><strong class="text-slate-800">Visi:</strong> Menyediakan sistem digital terjangkau dengan standar desain aplikasi modern.</p>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="bi bi-shield-check text-blue-500 mt-0.5 mr-2"></i>
+                        <p class="text-xs text-slate-600 leading-relaxed"><strong class="text-slate-800">Kualitas:</strong> Struktur UI/UX yang bersih, database tersentralisasi, dan performa tinggi.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- BOTTOM NAVIGATION (Gaya Aplikasi Android) -->
+    <nav class="bottom-nav fixed bottom-0 w-full bg-white flex justify-around py-2 z-50 shadow-[0_-4px_15px_rgba(0,0,0,0.02)]">
+        <button onclick="nav('home')" class="nav-btn flex flex-col items-center w-1/3 pt-1 text-blue-600" id="nav-home">
+            <i class="bi bi-house-door-fill text-[22px]"></i>
+            <span class="text-[10px] mt-0.5 font-semibold">Home</span>
+        </button>
+        <button onclick="nav('katalog')" class="nav-btn flex flex-col items-center w-1/3 pt-1 text-slate-400" id="nav-katalog">
+            <i class="bi bi-grid text-[22px]"></i>
+            <span class="text-[10px] mt-0.5 font-medium">Katalog</span>
+        </button>
+        <button onclick="nav('profil')" class="nav-btn flex flex-col items-center w-1/3 pt-1 text-slate-400" id="nav-profil">
+            <i class="bi bi-person text-[22px]"></i>
+            <span class="text-[10px] mt-0.5 font-medium">Profil</span>
+        </button>
+    </nav>
+
+    <script>
+        // Logika Navigasi ala Aplikasi (Single Page)
+        function nav(targetId) {
+            // Sembunyikan semua halaman
+            document.querySelectorAll('.page-section').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Tampilkan halaman yang dituju
+            document.getElementById(targetId).classList.add('active');
+            
+            // Reset semua warna dan ikon di Bottom Nav
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-blue-600');
+                btn.classList.add('text-slate-400');
+                
+                const span = btn.querySelector('span');
+                span.classList.remove('font-semibold');
+                span.classList.add('font-medium');
+                
+                const icon = btn.querySelector('i');
+                if (icon.classList.contains('bi-house-door-fill')) icon.className = 'bi bi-house-door text-[22px]';
+                if (icon.classList.contains('bi-grid-fill')) icon.className = 'bi bi-grid text-[22px]';
+                if (icon.classList.contains('bi-person-fill')) icon.className = 'bi bi-person text-[22px]';
+            });
+
+            // Aktifkan warna dan ikon untuk menu yang dipilih
+            const activeBtn = document.getElementById('nav-' + (targetId === 'demo' ? 'katalog' : targetId));
+            if(activeBtn) {
+                activeBtn.classList.remove('text-slate-400');
+                activeBtn.classList.add('text-blue-600');
+                
+                const span = activeBtn.querySelector('span');
+                span.classList.remove('font-medium');
+                span.classList.add('font-semibold');
+                
+                const icon = activeBtn.querySelector('i');
+                if (icon.classList.contains('bi-house-door')) icon.className = 'bi bi-house-door-fill text-[22px]';
+                if (icon.classList.contains('bi-grid')) icon.className = 'bi bi-grid-fill text-[22px]';
+                if (icon.classList.contains('bi-person')) icon.className = 'bi bi-person-fill text-[22px]';
+            }
+            
+            // Gulir otomatis ke paling atas
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
