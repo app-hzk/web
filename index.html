@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- FITUR 3: Optimasi SEO & Social Sharing (Open Graph) -->
+    <!-- Optimasi SEO & Social Sharing (Open Graph) -->
     <title>HZK Digital | Solusi Bisnis & Produk Digital Premium</title>
     <meta name="description" content="Tingkatkan efisiensi bisnismu dengan koleksi Web App dan Template Google Sheets siap pakai dari HZK Digital.">
     <meta property="og:title" content="HZK Digital | Solusi Bisnis Digital">
@@ -17,12 +17,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class', // Mengaktifkan toggle manual untuk mode gelap
+            darkMode: 'class', 
             theme: { extend: {} }
         }
     </script>
     
-    <!-- FITUR 1: PapaParse untuk Parsing Data Google Sheets -->
+    <!-- PapaParse untuk Parsing Data Google Sheets -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
     <!-- Font Inter & Nunito & Bootstrap Icons -->
@@ -73,7 +73,7 @@
             hzk.
         </div>
         <div class="flex items-center space-x-3">
-            <!-- FITUR 5: Tombol Toggle Mode Gelap -->
+            <!-- Tombol Toggle Mode Gelap -->
             <button onclick="toggleDarkMode()" class="text-gray-500 dark:text-gray-300 hover:text-emerald-500 dark:hover:text-yellow-400 transition-colors">
                 <i id="theme-icon" class="bi bi-moon-stars-fill text-lg"></i>
             </button>
@@ -123,7 +123,7 @@
                 <!-- Data diisi via JS -->
             </div>
 
-            <!-- FITUR 4: Testimoni / Ulasan Pelanggan -->
+            <!-- Testimoni / Ulasan Pelanggan -->
             <div class="mb-4">
                 <h2 class="font-bold text-gray-900 dark:text-white">Ulasan Pelanggan</h2>
                 <p class="text-[11px] text-gray-500 dark:text-gray-400">Apa kata mereka yang sudah menggunakan produk kami.</p>
@@ -142,7 +142,7 @@
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Pilih sistem digital sesuai kebutuhanmu.</p>
             </div>
 
-            <!-- FITUR 2: Live Search Bar -->
+            <!-- Live Search Bar -->
             <div class="relative mb-4">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <i class="bi bi-search text-gray-400"></i>
@@ -233,22 +233,16 @@
     <!-- ========================================== -->
     <script>
         // --- KONFIGURASI GOOGLE SHEETS ---
-        // Ganti URL di bawah ini dengan link CSV "Publish to Web" dari Google Sheets-mu
         const URL_CSV_PRODUK = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTs2PDgdV9o6atNX3gyr3h5N4WPM2PxezpBK-d-iYJTokxHUH4mgo9CBgf37pfxQjYS1V4dtUSIaGjc/pub?gid=607351424&single=true&output=csv'; 
         const URL_CSV_TESTIMONI = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTs2PDgdV9o6atNX3gyr3h5N4WPM2PxezpBK-d-iYJTokxHUH4mgo9CBgf37pfxQjYS1V4dtUSIaGjc/pub?gid=2025731803&single=true&output=csv'; 
 
-        // --- DUMMY DATA (Fallback jika Sheets belum disetting/error) ---
+        // --- DUMMY DATA (Fallback jika koneksi gagal) ---
         let dbProduk = [
-            { id: "P001", nama: "Aplikasi Kasir V5.0.9", kategori: "Web App", harga: 150000, icon: "bi-calculator", warnaIkon: "text-emerald-500", deskripsi: "Sistem point of sales (POS) ringan dengan antarmuka bersih bergaya Android.", linkDemo: "https://demo.hzk.my.id/kasir", tipeDemo: "link", versiTerbaru: "v5.0.9", changelog_v1: "v5.0.9|Perbaikan integrasi PDF viewer", changelog_v2: "v5.0.8|Perbaikan masalah layout" },
-            { id: "P002", nama: "Jadwal Belajar Interaktif", kategori: "Web App", harga: 75000, icon: "bi-calendar-check", warnaIkon: "text-yellow-500", deskripsi: "Platform PWA pencatat jadwal harian dengan countdown timer.", linkDemo: "https://demo.hzk.my.id/jadwal", tipeDemo: "link", versiTerbaru: "v2.1", changelog_v1: "v2.1|Memperbaiki bug countdown", changelog_v2: "" },
-            { id: "P003", nama: "BelanjApp - Manajemen Stok", kategori: "Web App", harga: 125000, icon: "bi-box-seam", warnaIkon: "text-emerald-600", deskripsi: "Aplikasi pencatatan barang masuk dan keluar dengan desain cards UI.", linkDemo: "https://demo.hzk.my.id/belanjapp", tipeDemo: "link", versiTerbaru: "v1.5", changelog_v1: "v1.5|Optimasi Google Sheets", changelog_v2: "" },
-            { id: "P004", nama: "Sistem Keuangan UMKM", kategori: "Google Sheets", harga: 50000, icon: "bi-file-earmark-spreadsheet", warnaIkon: "text-green-600", deskripsi: "Template spreadsheet cerdas untuk menghitung laba rugi.", linkDemo: "https://docs.google.com/spreadsheets/", tipeDemo: "link", versiTerbaru: "", changelog_v1: "", changelog_v2: "" }
+            { id: "P001", nama: "Gagal memuat produk", kategori: "Sistem", harga: 0, icon: "bi-exclamation-triangle", warnaIkon: "text-red-500", deskripsi: "Silakan periksa koneksi atau URL Google Sheets Anda.", linkDemo: "#", tipeDemo: "link", versiTerbaru: "", changelog_v1: "", changelog_v2: "" }
         ];
 
         let dbTestimoni = [
-            { nama: "Budi Santoso", profesi: "Pemilik Toko Retail", rating: 5, komentar: "Aplikasi kasirnya sangat ringan. Transaksi jadi jauh lebih rapi, dan desainnya benar-benar mirip aplikasi Android sungguhan." },
-            { nama: "Siti Aminah", profesi: "Admin Keuangan UMKM", rating: 5, komentar: "Template Google Sheets-nya life saver banget! Saya nggak perlu pusing bikin rumus dari nol, semua laporan otomatis terisi." },
-            { nama: "Andi Wijaya", profesi: "Mahasiswa", rating: 4, komentar: "Jadwal belajarnya oke, countdown timernya ngebantu buat fokus. Sangat worth it." }
+            { nama: "Sistem Info", profesi: "Admin", rating: 5, komentar: "Menunggu data testimoni dari Google Sheets..." }
         ];
 
         let currentKategori = 'Semua';
@@ -297,6 +291,9 @@
 
         // --- SISTEM RENDER UI PRODUK ---
         function buatKartuProduk(produk) {
+            // Melindungi sistem jika ada baris kosong dari sheets yang terbaca
+            if(!produk.kategori) return '';
+
             const badgeWarna = produk.kategori.includes("Web App") ? "text-emerald-700 bg-emerald-50 border-emerald-100 dark:bg-emerald-900/30 dark:border-emerald-800 dark:text-emerald-400" :
                                produk.kategori.includes("PDF") ? "text-red-700 bg-red-50 border-red-100 dark:bg-red-900/30 dark:border-red-800 dark:text-red-400" :
                                "text-yellow-700 bg-yellow-50 border-yellow-100 dark:bg-yellow-900/30 dark:border-yellow-800 dark:text-yellow-400";
@@ -305,7 +302,7 @@
                 <div class="android-card bg-white dark:bg-gray-800 border-gray-100 dark:border-gray-700 p-3.5 cursor-pointer flex flex-col justify-between" onclick="bukaDetailProduk('${produk.id}')">
                     <div>
                         <div class="bg-gray-50 dark:bg-gray-700 h-24 rounded-xl mb-3 flex flex-col items-center justify-center border border-gray-100 dark:border-gray-600">
-                            <i class="bi ${produk.icon} text-3xl ${produk.warnaIkon} mb-1"></i>
+                            <i class="bi ${produk.icon || 'bi-box'} text-3xl ${produk.warnaIkon || 'text-gray-500'} mb-1"></i>
                         </div>
                         <span class="text-[9px] font-bold ${badgeWarna} border px-2 py-0.5 rounded-md mb-2 inline-block uppercase tracking-wider">${produk.kategori}</span>
                         <h3 class="font-bold text-[13px] leading-tight text-gray-900 dark:text-white line-clamp-2 mb-1">${produk.nama}</h3>
@@ -319,8 +316,10 @@
 
         function renderUI(dataFilter = dbProduk) {
             const homeContainer = document.getElementById('home-featured-container');
-            if (homeContainer && dbProduk.length >= 2) {
-                homeContainer.innerHTML = buatKartuProduk(dbProduk[0]) + buatKartuProduk(dbProduk[1]);
+            if (homeContainer && dataFilter.length >= 2) {
+                homeContainer.innerHTML = buatKartuProduk(dataFilter[0]) + buatKartuProduk(dataFilter[1]);
+            } else if (homeContainer) {
+                homeContainer.innerHTML = dataFilter.map(p => buatKartuProduk(p)).join('');
             }
 
             const katalogContainer = document.getElementById('katalog-container');
@@ -341,6 +340,7 @@
         function renderTestimoni() {
             const container = document.getElementById('testimoni-container');
             container.innerHTML = dbTestimoni.map(t => {
+                if(!t.nama) return '';
                 let stars = '';
                 for(let i=0; i<5; i++) { stars += `<i class="bi bi-star-fill text-[10px] ${i < parseInt(t.rating) ? 'text-yellow-400' : 'text-gray-200 dark:text-gray-600'}"></i> `; }
                 
@@ -363,23 +363,22 @@
         // --- FITUR FILTER KATEGORI & LIVE SEARCH ---
         function filterKategori(kategori) {
             currentKategori = kategori;
-            document.getElementById('input-pencarian').value = ''; // Reset pencarian
+            document.getElementById('input-pencarian').value = ''; 
 
-            // Styling tombol filter
             document.querySelectorAll('.kat-btn').forEach(btn => {
                 btn.className = "kat-btn bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-colors";
             });
             event.target.className = "kat-btn bg-gray-900 dark:bg-emerald-600 text-white border border-gray-900 dark:border-emerald-600 px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-colors active-kat";
 
-            const filteredData = kategori === 'Semua' ? dbProduk : dbProduk.filter(p => p.kategori.includes(kategori));
+            const filteredData = kategori === 'Semua' ? dbProduk : dbProduk.filter(p => p.kategori && p.kategori.includes(kategori));
             renderUI(filteredData);
         }
 
         function filterPencarian() {
             const keyword = document.getElementById('input-pencarian').value.toLowerCase();
-            const dataBasis = currentKategori === 'Semua' ? dbProduk : dbProduk.filter(p => p.kategori.includes(currentKategori));
+            const dataBasis = currentKategori === 'Semua' ? dbProduk : dbProduk.filter(p => p.kategori && p.kategori.includes(currentKategori));
             
-            const hasilCari = dataBasis.filter(p => p.nama.toLowerCase().includes(keyword) || p.deskripsi.toLowerCase().includes(keyword));
+            const hasilCari = dataBasis.filter(p => (p.nama && p.nama.toLowerCase().includes(keyword)) || (p.deskripsi && p.deskripsi.toLowerCase().includes(keyword)));
             renderUI(hasilCari);
         }
 
@@ -396,7 +395,7 @@
             }
 
             let changelogHtml = '';
-            if (produk.changelog_v1) {
+            if (produk.changelog_v1 || produk.changelog_v2) {
                 const parseLog = (logStr) => {
                     if(!logStr) return '';
                     let part = logStr.split('|');
