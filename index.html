@@ -8,18 +8,23 @@
     <!-- Tailwind CSS untuk Styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Font Inter & Bootstrap Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Inter (Teks Utama) & Nunito (Logo Rounded) & Bootstrap Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: #f4f5f7; /* Abu-abu sangat terang */
+            background-color: #f4f5f7; 
             -webkit-tap-highlight-color: transparent;
         }
         
-        /* Desain Kartu ala Android (Tetap dipertahankan) */
+        /* Font khusus untuk logo agar bulat (rounded) */
+        .font-logo {
+            font-family: 'Nunito', sans-serif;
+        }
+
+        /* Desain Kartu ala Android */
         .android-card { 
             background: #ffffff; 
             border-radius: 16px; 
@@ -46,19 +51,23 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Kustomisasi Scrollbar untuk area deskripsi/katalog */
-        ::-webkit-scrollbar { width: 4px; }
+        /* Kustomisasi Scrollbar */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        
+        /* Utilitas sembunyikan scrollbar untuk carousel banner */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="text-gray-800 pb-20">
 
-    <!-- TOP APP BAR (Warna Putih & Gradasi Hijau-Kuning) -->
+    <!-- TOP APP BAR -->
     <header class="bg-white shadow-[0_2px_10px_rgba(0,0,0,0.04)] sticky top-0 z-50 px-4 py-3.5 flex justify-between items-center">
-        <!-- Logo Text dengan Gradasi -->
-        <div class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-emerald-600 to-yellow-500 bg-clip-text text-transparent">
-            hzk.my.id
+        <!-- Logo Text (Rounded Font) -->
+        <div class="font-logo font-black text-2xl tracking-tight bg-gradient-to-r from-emerald-600 to-yellow-500 bg-clip-text text-transparent">
+            hzk.
         </div>
         <!-- Indikator Google Sheets -->
         <div class="text-[10px] font-bold text-gray-500 bg-gray-100 px-2.5 py-1.5 rounded-full flex items-center border border-gray-200">
@@ -73,26 +82,37 @@
         <!-- 1. HALAMAN HOME / LANDING PAGE             -->
         <!-- ========================================== -->
         <section id="home" class="page-section active">
-            <!-- Hero Card dengan Gradasi Halus -->
-            <div class="android-card bg-gradient-to-br from-gray-900 to-black p-6 mb-6 text-center relative overflow-hidden">
-                <!-- Aksen Dekorasi Kuning -->
-                <div class="absolute -top-10 -right-10 w-24 h-24 bg-yellow-400 rounded-full opacity-20 blur-xl"></div>
-                <div class="absolute -bottom-10 -left-10 w-24 h-24 bg-emerald-500 rounded-full opacity-20 blur-xl"></div>
+            
+            <!-- Banner Promosi (Carousel bergaya swipe Android) -->
+            <div class="flex overflow-x-auto snap-x snap-mandatory no-scrollbar space-x-3 mb-6 pb-2">
                 
-                <div class="w-14 h-14 bg-emerald-500 text-white rounded-2xl mx-auto flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/30">
-                    <i class="bi bi-rocket-takeoff-fill text-2xl"></i>
+                <!-- Banner Promo 1 -->
+                <div class="snap-center shrink-0 w-[90%] sm:w-full relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 p-5 shadow-lg shadow-emerald-500/20 text-white ml-1">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-white opacity-10 rounded-full blur-xl"></div>
+                    <span class="inline-block bg-yellow-400 text-gray-900 text-[9px] font-black uppercase px-2 py-0.5 rounded mb-2 tracking-widest">Promo Spesial</span>
+                    <h3 class="font-extrabold text-lg mb-1 leading-tight">Diskon 50% Template UMKM</h3>
+                    <p class="text-[11px] text-emerald-50 opacity-90 mb-4 line-clamp-2">Optimalkan laporan keuangan usahamu dengan potongan harga eksklusif minggu ini.</p>
+                    <button onclick="nav('katalog')" class="bg-white text-emerald-600 px-4 py-2 rounded-full text-xs font-bold shadow-sm active:scale-95 transition-transform flex items-center w-max">
+                        Klaim Sekarang <i class="bi bi-arrow-right-short ml-1 text-base"></i>
+                    </button>
                 </div>
-                <h1 class="text-2xl font-extrabold mb-2 text-white tracking-tight">Katalog Digital <span class="text-yellow-400">Premium</span></h1>
-                <p class="text-sm text-gray-300 mb-6 leading-relaxed">Tingkatkan efisiensi bisnismu dengan koleksi Web App dan Template Google Sheets siap pakai.</p>
                 
-                <button onclick="nav('katalog')" class="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-6 py-3 rounded-full text-sm font-bold w-full transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center">
-                    Eksplorasi Produk <i class="bi bi-arrow-right-short ml-1 text-lg"></i>
-                </button>
+                <!-- Banner Promo 2 -->
+                <div class="snap-center shrink-0 w-[90%] sm:w-full relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 to-black p-5 shadow-lg shadow-gray-900/20 text-white mr-1">
+                    <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-yellow-400 opacity-20 rounded-full blur-2xl"></div>
+                    <span class="inline-block bg-emerald-500 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded mb-2 tracking-widest">Baru Rilis</span>
+                    <h3 class="font-extrabold text-lg mb-1 leading-tight">Web App Kasir v5.0.9</h3>
+                    <p class="text-[11px] text-gray-300 mb-4 line-clamp-2">Hadir dengan UI Material yang lebih mulus dan sistem cetak struk terintegrasi.</p>
+                    <button onclick="nav('katalog')" class="bg-yellow-400 text-gray-900 px-4 py-2 rounded-full text-xs font-bold shadow-sm active:scale-95 transition-transform flex items-center w-max">
+                        Lihat Live Demo <i class="bi bi-play-fill ml-1 text-base"></i>
+                    </button>
+                </div>
+
             </div>
 
             <div class="flex items-center justify-between mb-4 mt-2">
                 <h2 class="font-bold text-gray-900">Rekomendasi Utama</h2>
-                <button onclick="nav('katalog')" class="text-xs font-semibold text-emerald-600">Lihat Semua</button>
+                <button onclick="nav('katalog')" class="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">Lihat Semua</button>
             </div>
 
             <!-- Menampilkan 2 produk unggulan (akan diisi otomatis oleh JS) -->
@@ -104,11 +124,11 @@
         <!-- ========================================== -->
         <section id="katalog" class="page-section">
             <div class="mb-5">
-                <h2 class="font-bold text-xl text-gray-900">Katalog Lengkap</h2>
+                <h2 class="font-bold text-xl text-gray-900">Katalog Digital</h2>
                 <p class="text-xs text-gray-500 mt-1">Pilih sistem digital sesuai kebutuhanmu.</p>
             </div>
             
-            <!-- Filter Kategori (UI Hijau/Hitam/Abu) -->
+            <!-- Filter Kategori -->
             <div class="flex space-x-2 overflow-x-auto pb-3 mb-2 no-scrollbar">
                 <button class="bg-gray-900 text-white px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">Semua</button>
                 <button class="bg-white border border-gray-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">Web App</button>
@@ -118,7 +138,7 @@
 
             <!-- Kontainer Grid Produk -->
             <div id="katalog-container" class="grid grid-cols-2 gap-3.5">
-                <!-- Produk di-render via JavaScript dari data Google Sheets -->
+                <!-- Produk di-render via JavaScript -->
             </div>
         </section>
 
@@ -126,7 +146,7 @@
         <!-- 3. HALAMAN DEMO & DETAIL PRODUK            -->
         <!-- ========================================== -->
         <section id="demo" class="page-section">
-            <button onclick="nav('katalog')" class="text-sm text-gray-500 mb-4 flex items-center font-semibold bg-white px-3 py-1.5 rounded-full shadow-sm border border-gray-100">
+            <button onclick="nav('katalog')" class="text-sm text-gray-500 mb-4 flex items-center font-semibold bg-white px-3 py-1.5 rounded-full shadow-sm border border-gray-100 active:bg-gray-50">
                 <i class="bi bi-arrow-left-short text-lg mr-1"></i> Kembali
             </button>
             
@@ -141,7 +161,7 @@
         <section id="profil" class="page-section">
             <div class="android-card p-6 border-t-4 border-emerald-500 text-center">
                 <div class="w-20 h-20 bg-gray-100 rounded-full mx-auto mb-3 flex items-center justify-center border-4 border-white shadow-md">
-                    <span class="font-extrabold text-3xl bg-gradient-to-br from-emerald-500 to-yellow-500 bg-clip-text text-transparent">H</span>
+                    <span class="font-logo font-black text-3xl bg-gradient-to-br from-emerald-500 to-yellow-500 bg-clip-text text-transparent">hzk.</span>
                 </div>
                 <h3 class="font-bold text-lg text-gray-900 mb-1">HZK Digital Studio</h3>
                 <p class="text-xs font-medium text-emerald-600 mb-5 bg-emerald-50 inline-block px-3 py-1 rounded-full">Developer & Creator</p>
@@ -151,10 +171,10 @@
                 </p>
 
                 <div class="text-left bg-gray-50 p-4 rounded-xl border border-gray-100">
-                    <h4 class="text-xs font-bold text-gray-900 mb-2 uppercase tracking-wide">Layanan Kami</h4>
-                    <ul class="text-xs text-gray-600 space-y-2">
-                        <li class="flex items-center"><i class="bi bi-check-circle-fill text-emerald-500 mr-2"></i> Pengembangan Web App</li>
-                        <li class="flex items-center"><i class="bi bi-check-circle-fill text-yellow-500 mr-2"></i> Template Otomatisasi Sheets</li>
+                    <h4 class="text-[11px] font-bold text-gray-900 mb-2 uppercase tracking-wide">Layanan Utama</h4>
+                    <ul class="text-xs text-gray-600 space-y-2.5">
+                        <li class="flex items-center"><i class="bi bi-check-circle-fill text-emerald-500 mr-2"></i> Pengembangan Web App Responsif</li>
+                        <li class="flex items-center"><i class="bi bi-check-circle-fill text-yellow-500 mr-2"></i> Template Otomatisasi Google Sheets</li>
                         <li class="flex items-center"><i class="bi bi-check-circle-fill text-gray-800 mr-2"></i> Desain UI/UX Clean Material</li>
                     </ul>
                 </div>
@@ -185,8 +205,6 @@
     <!-- JAVASCRIPT SYSTEM & DUMMY DATA             -->
     <!-- ========================================== -->
     <script>
-        // Simulasi Database Google Sheets (Nanti tinggal di-fetch dari CSV sungguhan)
-        // Dilarang keras memindahkan struktur ini ke Firebase. Tetap gunakan logika array/Sheets ini.
         const dbProduk = [
             {
                 id: "P001",
@@ -196,12 +214,12 @@
                 icon: "bi-calculator",
                 warnaIkon: "text-emerald-500",
                 deskripsi: "Sistem point of sales (POS) ringan dengan antarmuka bersih bergaya Android. Dilengkapi fitur cetak struk Bluetooth dan rekap omzet harian.",
-                linkDemo: "https://example.com/demo-kasir",
-                tipeDemo: "link", // link atau pdf
+                linkDemo: "https://demo.hzk.my.id/kasir", // Contoh penggunaan subdomain untuk live demo
+                tipeDemo: "link", 
                 versiTerbaru: "v5.0.9",
                 changelog: [
                     { versi: "v5.0.9", detail: "Perbaikan integrasi PDF viewer dan tambahan opsi Dropdown pembaruan." },
-                    { versi: "v5.0.8", detail: "Perbaikan masalah sinkronisasi Google Sheets dan perbaikan layout agar lebih bersih." }
+                    { versi: "v5.0.8", detail: "Perbaikan masalah sinkronisasi Google Sheets dan layout." }
                 ]
             },
             {
@@ -212,11 +230,11 @@
                 icon: "bi-calendar-check",
                 warnaIkon: "text-yellow-500",
                 deskripsi: "Platform PWA pencatat jadwal belajar harian dengan fitur penghitung mundur (countdown timer) dan sinkronisasi data yang sempurna.",
-                linkDemo: "https://example.com/demo-jadwal",
+                linkDemo: "https://demo.hzk.my.id/jadwal",
                 tipeDemo: "link",
                 versiTerbaru: "v2.1",
                 changelog: [
-                    { versi: "v2.1", detail: "Memperbaiki bug countdown issue dan implementasi fungsi PWA." }
+                    { versi: "v2.1", detail: "Memperbaiki bug countdown issue dan implementasi PWA." }
                 ]
             },
             {
@@ -227,11 +245,11 @@
                 icon: "bi-box-seam",
                 warnaIkon: "text-emerald-600",
                 deskripsi: "Aplikasi pencatatan barang masuk dan keluar dengan desain cards UI yang user-friendly layaknya aplikasi Android native.",
-                linkDemo: "https://example.com/demo-belanjapp",
+                linkDemo: "https://demo.hzk.my.id/belanjapp",
                 tipeDemo: "link",
                 versiTerbaru: "v1.5",
                 changelog: [
-                    { versi: "v1.5", detail: "Optimasi sistem transaksi yang langsung tersimpan rapi ke Google Sheets." }
+                    { versi: "v1.5", detail: "Optimasi sistem transaksi ke database Google Sheets." }
                 ]
             },
             {
@@ -251,7 +269,7 @@
                 id: "P005",
                 nama: "E-Book: Arsitektur UI Mobile",
                 kategori: "E-Book (PDF)",
-                harga: 0, // Gratis
+                harga: 0, 
                 icon: "bi-filetype-pdf",
                 warnaIkon: "text-red-500",
                 deskripsi: "Buku panduan PDF setebal 45 halaman yang membahas cara merancang layout aplikasi web yang responsif, bersih, dan mudah digunakan.",
@@ -275,13 +293,11 @@
             }
         ];
 
-        // Format Uang Rupiah
         function formatRupiah(angka) {
             if (angka === 0) return "GRATIS";
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
         }
 
-        // Fungsi Render Kartu Produk
         function buatKartuProduk(produk) {
             const badgeWarna = produk.kategori === "Web App" ? "text-emerald-700 bg-emerald-50 border-emerald-100" :
                                produk.kategori.includes("PDF") ? "text-red-700 bg-red-50 border-red-100" :
@@ -303,23 +319,18 @@
             `;
         }
 
-        // Inisialisasi Tampilan Awal
         document.addEventListener('DOMContentLoaded', () => {
-            // Render 2 produk ke Home
             const homeContainer = document.getElementById('home-featured-container');
             homeContainer.innerHTML = buatKartuProduk(dbProduk[0]) + buatKartuProduk(dbProduk[1]);
 
-            // Render semua produk ke Katalog
             const katalogContainer = document.getElementById('katalog-container');
             katalogContainer.innerHTML = dbProduk.map(p => buatKartuProduk(p)).join('');
         });
 
-        // Logika SPA Navigasi
         function nav(targetId) {
             document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
             document.getElementById(targetId).classList.add('active');
             
-            // Reset Bottom Nav (Abu-abu)
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.className = "nav-btn flex flex-col items-center w-1/3 pt-1 text-gray-400";
                 btn.querySelector('span').classList.replace('font-bold', 'font-semibold');
@@ -327,7 +338,6 @@
                 icon.className = icon.className.replace('-fill', '');
             });
 
-            // Aktifkan tombol yang dipilih (Hijau)
             const activeBtn = document.getElementById('nav-' + (targetId === 'demo' ? 'katalog' : targetId));
             if(activeBtn) {
                 activeBtn.className = "nav-btn flex flex-col items-center w-1/3 pt-1 text-emerald-600";
@@ -338,17 +348,15 @@
             window.scrollTo(0, 0);
         }
 
-        // Buka Halaman Detail Produk
         function bukaDetailProduk(id) {
             const produk = dbProduk.find(p => p.id === id);
             const container = document.getElementById('detail-produk-container');
             
-            // Konfigurasi Tombol Demo
             let btnDemoHtml = '';
             if (produk.tipeDemo === 'pdf') {
                 btnDemoHtml = `
                     <a href="${produk.linkDemo}" target="_blank" class="w-full border border-gray-200 hover:bg-gray-50 text-gray-700 py-3 rounded-xl text-xs font-bold flex justify-center items-center transition-colors mb-3">
-                        <i class="bi bi-file-earmark-pdf text-red-500 text-lg mr-2"></i> Buka Dokumen PDF (Tab Baru)
+                        <i class="bi bi-file-earmark-pdf text-red-500 text-lg mr-2"></i> Buka Dokumen PDF
                     </a>`;
             } else {
                 btnDemoHtml = `
@@ -357,7 +365,6 @@
                     </a>`;
             }
 
-            // Konfigurasi Changelog Dropdown
             let changelogHtml = '';
             if (produk.changelog && produk.changelog.length > 0) {
                 let listLi = produk.changelog.map((log, index) => `
@@ -412,14 +419,12 @@
             nav('demo');
         }
 
-        // Logika Checkout (Kode Unik + WA)
         function prosesBeli(namaProduk, hargaAsli) {
             if (hargaAsli === 0) {
                 alert('Produk ini gratis. Anda akan diarahkan ke halaman unduhan langsung.');
                 return;
             }
 
-            // Generate Kode Unik 3 Digit (100 - 999)
             const kodeUnik = Math.floor(Math.random() * 900) + 100;
             const totalBayar = hargaAsli + kodeUnik;
             
@@ -432,7 +437,8 @@
                 `Mohon instruksi nomor rekening untuk pembayaran. Saya paham harus mentransfer sesuai 3 digit angka terakhir agar diproses otomatis.`
             );
 
-            const nomorWA = "6281234567890"; // Ganti dengan nomormu
+            // Nomor WhatsApp telah diubah
+            const nomorWA = "6287723328833"; 
             window.open(`https://wa.me/${nomorWA}?text=${teksWA}`, '_blank');
         }
     </script>
