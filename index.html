@@ -3,230 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HZK Digital | Web App & Template</title>
+    <title>Portal Unduhan | hzk.my.id</title>
     
-    <!-- Tailwind CSS untuk Styling -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Font dan Icon -->
+    <!-- Font & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: #f8f9fa; /* Warna latar bersih bergaya aplikasi */
+            background-color: #f8f9fa;
+            -webkit-tap-highlight-color: transparent;
         }
         
-        /* Desain Kartu ala Android */
+        /* Desain Kartu Clean ala Aplikasi Android */
         .android-card { 
             background: #ffffff; 
-            border-radius: 16px; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.04); 
+            border-radius: 20px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
+            border: 1px solid rgba(0,0,0,0.02);
         }
-        
-        /* Bottom Navigation Bar */
-        .bottom-nav { 
-            border-top: 1px solid #f1f5f9; 
-            padding-bottom: env(safe-area-inset-bottom);
+
+        /* Form Input Styling */
+        .app-input {
+            width: 100%;
+            background-color: #f1f5f9;
+            border: 1.5px solid transparent;
+            border-radius: 14px;
+            padding: 14px 16px;
+            font-size: 14px;
+            color: #1e293b;
+            transition: all 0.2s ease;
         }
-        
-        /* Logic untuk memindah halaman tanpa reload (Single Page) */
-        .page-section { display: none; animation: fadeIn 0.3s ease; }
-        .page-section.active { display: block; }
-        
+        .app-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Transisi halus antar elemen */
+        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-<body class="text-slate-800 pb-20">
+<body class="text-slate-800 min-h-screen flex flex-col">
 
     <!-- TOP APP BAR -->
-    <header class="bg-white shadow-sm sticky top-0 z-50 px-4 py-3.5 flex justify-between items-center">
-        <div class="font-bold text-lg tracking-tight text-blue-600">hzk.my.id</div>
-        <!-- Indikator kesiapan database Google Sheets -->
-        <div class="text-[10px] font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full flex items-center">
-            <span class="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5"></span> Sheets Ready
+    <header class="bg-white shadow-sm sticky top-0 z-50 px-4 py-4 flex justify-center items-center">
+        <div class="font-bold text-lg tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            download.hzk.my.id
         </div>
     </header>
 
     <!-- AREA KONTEN UTAMA -->
-    <main class="max-w-md mx-auto mt-5 px-4">
+    <main class="flex-grow max-w-md w-full mx-auto mt-6 px-4 pb-12">
         
-        <!-- 1. HALAMAN HOME / LANDING PAGE -->
-        <section id="home" class="page-section active">
-            <div class="android-card p-6 mb-5 text-center">
-                <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl mx-auto flex items-center justify-center mb-4">
-                    <i class="bi bi-rocket-takeoff text-2xl"></i>
+        <!-- Header Text -->
+        <div class="text-center mb-6">
+            <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-full mx-auto flex items-center justify-center mb-3">
+                <i class="bi bi-cloud-arrow-down-fill text-2xl"></i>
+            </div>
+            <h1 class="text-xl font-bold text-slate-900 mb-1">Akses Produk Digital</h1>
+            <p class="text-xs text-slate-500">Masukkan nomor invoice dan email yang digunakan saat checkout untuk mengunduh pesanan Anda.</p>
+        </div>
+
+        <!-- FORM KARTU PENCARIAN -->
+        <div class="android-card p-5 mb-5">
+            <form id="form-cek-pesanan" onsubmit="prosesCekPesanan(event)">
+                <div class="mb-4">
+                    <label class="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5 ml-1">Nomor Invoice</label>
+                    <input type="text" id="input-invoice" class="app-input" placeholder="Contoh: INV-150124" required autocomplete="off">
                 </div>
-                <h1 class="text-xl font-bold mb-2 text-slate-900">Solusi Digital Bisnis</h1>
-                <p class="text-sm text-slate-500 mb-5 leading-relaxed">Tingkatkan produktivitas dengan Web App dan sistem terintegrasi yang mudah digunakan.</p>
-                <button onclick="nav('katalog')" class="bg-blue-600 active:bg-blue-700 text-white px-6 py-2.5 rounded-full text-sm font-semibold w-full transition-colors">
-                    Lihat Produk
+                
+                <div class="mb-5">
+                    <label class="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5 ml-1">Alamat Email</label>
+                    <input type="email" id="input-email" class="app-input" placeholder="Masukkan email Anda" required autocomplete="email">
+                </div>
+
+                <button type="submit" id="btn-submit" class="w-full bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white py-3.5 rounded-2xl text-sm font-semibold transition-all flex justify-center items-center">
+                    <span>Cek Pesanan Saya</span>
+                    <i class="bi bi-search ml-2 text-sm"></i>
                 </button>
-            </div>
-        </section>
+            </form>
+        </div>
 
-        <!-- 2. HALAMAN KATALOG -->
-        <section id="katalog" class="page-section">
-            <div class="flex justify-between items-end mb-4">
-                <h2 class="font-bold text-lg text-slate-900">Katalog Produk</h2>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-3.5">
-                <!-- Contoh Kartu Produk 1 -->
-                <div class="android-card p-3 cursor-pointer active:scale-95 transition-transform" onclick="nav('demo')">
-                    <div class="bg-slate-50 h-28 rounded-xl mb-3 flex flex-col items-center justify-center border border-slate-100">
-                        <i class="bi bi-file-earmark-spreadsheet text-3xl text-emerald-500 mb-1"></i>
-                    </div>
-                    <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md mb-1.5 inline-block">Template</span>
-                    <h3 class="font-semibold text-sm leading-tight text-slate-800 line-clamp-2">Sistem Keuangan & Transaksi</h3>
-                </div>
-                
-                <!-- Contoh Kartu Produk 2 -->
-                <div class="android-card p-3 cursor-pointer active:scale-95 transition-transform" onclick="nav('demo')">
-                    <div class="bg-slate-50 h-28 rounded-xl mb-3 flex flex-col items-center justify-center border border-slate-100">
-                        <i class="bi bi-app-indicator text-3xl text-blue-500 mb-1"></i>
-                    </div>
-                    <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md mb-1.5 inline-block">Web App</span>
-                    <h3 class="font-semibold text-sm leading-tight text-slate-800 line-clamp-2">Aplikasi Kasir V5.0.9</h3>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. HALAMAN DEMO & DETAIL PRODUK -->
-        <section id="demo" class="page-section">
-            <button onclick="nav('katalog')" class="text-sm text-slate-500 mb-4 flex items-center font-medium active:text-slate-700">
-                <i class="bi bi-chevron-left mr-1"></i> Kembali
-            </button>
-            
-            <div class="android-card p-5 mb-4">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-md uppercase tracking-wider">Web App</span>
-                    <span class="text-xs font-bold text-slate-800">Rp 150.000</span>
-                </div>
-                
-                <h2 class="font-bold text-xl text-slate-900 mb-2">Aplikasi Kasir V5.0.9</h2>
-                <p class="text-xs text-slate-500 mb-5 leading-relaxed">Aplikasi ringan dengan antarmuka yang dioptimalkan untuk perangkat seluler. Mendukung pencetakan struk dan laporan harian.</p>
-                
-                <div class="flex gap-2 mb-4">
-                    <button class="flex-1 bg-slate-900 text-white py-2.5 rounded-xl text-xs font-semibold flex justify-center items-center">
-                        <i class="bi bi-play-fill text-lg mr-1"></i> Live Demo
-                    </button>
-                    <button class="flex-1 border border-slate-200 text-slate-700 py-2.5 rounded-xl text-xs font-semibold flex justify-center items-center">
-                        <i class="bi bi-file-earmark-pdf mr-1.5 text-red-500"></i> Lihat PDF
-                    </button>
-                </div>
-                
-                <hr class="border-slate-100 my-4">
-                
-                <!-- Dropdown Catatan Pembaruan (Changelog) -->
-                <details class="text-sm group">
-                    <summary class="font-semibold text-slate-700 cursor-pointer outline-none list-none flex justify-between items-center">
-                        Catatan Pembaruan
-                        <i class="bi bi-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
-                    </summary>
-                    <div class="mt-3 bg-slate-50 rounded-xl p-3 border border-slate-100">
-                        <ul class="text-slate-600 text-xs space-y-2 relative pl-2 before:absolute before:left-0 before:top-1 before:bottom-1 before:w-[2px] before:bg-slate-200">
-                            <li class="relative pl-3 before:absolute before:-left-[5px] before:top-1.5 before:w-2 before:h-2 before:bg-blue-500 before:rounded-full">
-                                <span class="font-semibold text-slate-800">v5.0.9:</span> Perbaikan kompatibilitas PDF viewer pada browser seluler.
-                            </li>
-                            <li class="relative pl-3 before:absolute before:-left-[5px] before:top-1.5 before:w-2 before:h-2 before:bg-slate-300 before:rounded-full">
-                                <span class="font-semibold text-slate-800">v5.0.8:</span> Penyesuaian layout navigation card agar lebih responsif.
-                            </li>
-                        </ul>
-                    </div>
-                </details>
-            </div>
-        </section>
-
-        <!-- 4. HALAMAN COMPANY PROFILE -->
-        <section id="profil" class="page-section">
-            <h2 class="font-bold text-lg text-slate-900 mb-4">Profil Perusahaan</h2>
-            <div class="android-card p-5">
-                <div class="w-16 h-16 bg-slate-100 rounded-full mx-auto mb-3 flex items-center justify-center">
-                    <span class="font-bold text-xl text-slate-400">H</span>
-                </div>
-                <h3 class="text-center font-bold text-slate-900 mb-1">HZK Digital</h3>
-                <p class="text-center text-xs text-slate-500 mb-4">Bekasi, Jawa Barat</p>
-                
-                <div class="space-y-3 mt-5">
-                    <div class="flex items-start">
-                        <i class="bi bi-check-circle-fill text-blue-500 mt-0.5 mr-2"></i>
-                        <p class="text-xs text-slate-600 leading-relaxed"><strong class="text-slate-800">Visi:</strong> Menyediakan sistem digital terjangkau dengan standar desain aplikasi modern.</p>
-                    </div>
-                    <div class="flex items-start">
-                        <i class="bi bi-shield-check text-blue-500 mt-0.5 mr-2"></i>
-                        <p class="text-xs text-slate-600 leading-relaxed"><strong class="text-slate-800">Kualitas:</strong> Struktur UI/UX yang bersih, database tersentralisasi, dan performa tinggi.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- AREA HASIL PENCARIAN (Awalnya Disembunyikan) -->
+        <div id="area-hasil" class="hidden">
+            <!-- Konten Hasil akan dirender oleh JavaScript di sini -->
+        </div>
 
     </main>
 
-    <!-- BOTTOM NAVIGATION (Gaya Aplikasi Android) -->
-    <nav class="bottom-nav fixed bottom-0 w-full bg-white flex justify-around py-2 z-50 shadow-[0_-4px_15px_rgba(0,0,0,0.02)]">
-        <button onclick="nav('home')" class="nav-btn flex flex-col items-center w-1/3 pt-1 text-blue-600" id="nav-home">
-            <i class="bi bi-house-door-fill text-[22px]"></i>
-            <span class="text-[10px] mt-0.5 font-semibold">Home</span>
-        </button>
-        <button onclick="nav('katalog')" class="nav-btn flex flex-col items-center w-1/3 pt-1 text-slate-400" id="nav-katalog">
-            <i class="bi bi-grid text-[22px]"></i>
-            <span class="text-[10px] mt-0.5 font-medium">Katalog</span>
-        </button>
-        <button onclick="nav('profil')" class="nav-btn flex flex-col items-center w-1/3 pt-1 text-slate-400" id="nav-profil">
-            <i class="bi bi-person text-[22px]"></i>
-            <span class="text-[10px] mt-0.5 font-medium">Profil</span>
-        </button>
-    </nav>
+    <!-- FOOTER -->
+    <footer class="mt-auto py-6 text-center text-[10px] font-medium text-slate-400">
+        &copy; 2026 HZK Digital. All rights reserved.
+    </footer>
 
+    <!-- LOGIKA JAVASCRIPT & DATABASE GOOGLE SHEETS -->
     <script>
-        // Logika Navigasi ala Aplikasi (Single Page)
-        function nav(targetId) {
-            // Sembunyikan semua halaman
-            document.querySelectorAll('.page-section').forEach(el => {
-                el.classList.remove('active');
-            });
-            
-            // Tampilkan halaman yang dituju
-            document.getElementById(targetId).classList.add('active');
-            
-            // Reset semua warna dan ikon di Bottom Nav
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('text-blue-600');
-                btn.classList.add('text-slate-400');
-                
-                const span = btn.querySelector('span');
-                span.classList.remove('font-semibold');
-                span.classList.add('font-medium');
-                
-                const icon = btn.querySelector('i');
-                if (icon.classList.contains('bi-house-door-fill')) icon.className = 'bi bi-house-door text-[22px]';
-                if (icon.classList.contains('bi-grid-fill')) icon.className = 'bi bi-grid text-[22px]';
-                if (icon.classList.contains('bi-person-fill')) icon.className = 'bi bi-person text-[22px]';
-            });
-
-            // Aktifkan warna dan ikon untuk menu yang dipilih
-            const activeBtn = document.getElementById('nav-' + (targetId === 'demo' ? 'katalog' : targetId));
-            if(activeBtn) {
-                activeBtn.classList.remove('text-slate-400');
-                activeBtn.classList.add('text-blue-600');
-                
-                const span = activeBtn.querySelector('span');
-                span.classList.remove('font-medium');
-                span.classList.add('font-semibold');
-                
-                const icon = activeBtn.querySelector('i');
-                if (icon.classList.contains('bi-house-door')) icon.className = 'bi bi-house-door-fill text-[22px]';
-                if (icon.classList.contains('bi-grid')) icon.className = 'bi bi-grid-fill text-[22px]';
-                if (icon.classList.contains('bi-person')) icon.className = 'bi bi-person-fill text-[22px]';
+        // ==========================================
+        // DUMMY DATABASE (Simulasi Google Sheets)
+        // Struktur ini disiapkan agar nantinya mudah diubah menjadi fetch() ke file CSV Google Sheets,
+        // memastikan arsitektur data tetap menggunakan Sheets dan tidak beralih ke backend eksternal.
+        // ==========================================
+        const dataGoogleSheets = [
+            {
+                invoice: "INV-150124",
+                email: "budi@gmail.com",
+                nama_produk: "Aplikasi Kasir V5.0.9",
+                kategori: "Web App",
+                status: "LUNAS",
+                link_download: "https://drive.google.com/drive/folders/contoh-link-lunas",
+                tanggal: "06 Agu 2026"
+            },
+            {
+                invoice: "INV-150999",
+                email: "siti@yahoo.com",
+                nama_produk: "Template Excel Laporan Keuangan",
+                kategori: "Template",
+                status: "PENDING",
+                link_download: "",
+                tanggal: "06 Agu 2026"
             }
+        ];
+
+        // ==========================================
+        // FUNGSI UTAMA PENCARIAN
+        // ==========================================
+        function prosesCekPesanan(event) {
+            event.preventDefault(); // Mencegah halaman reload
+
+            const inputInvoice = document.getElementById('input-invoice').value.trim().toUpperCase();
+            const inputEmail = document.getElementById('input-email').value.trim().toLowerCase();
+            const btnSubmit = document.getElementById('btn-submit');
+            const areaHasil = document.getElementById('area-hasil');
+
+            // 1. Tampilkan status Loading pada tombol
+            btnSubmit.innerHTML = `<div class="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2"></div> Memeriksa Data...`;
+            btnSubmit.disabled = true;
+            btnSubmit.classList.add('opacity-80');
             
-            // Gulir otomatis ke paling atas
-            window.scrollTo(0, 0);
+            // Sembunyikan area hasil jika sebelumnya terbuka
+            areaHasil.classList.add('hidden');
+            areaHasil.classList.remove('fade-in');
+
+            // 2. Simulasi Jeda Loading (agar terasa proses fetching database)
+            setTimeout(() => {
+                // Kembalikan tombol ke semula
+                btnSubmit.innerHTML = `<span>Cek Pesanan Saya</span> <i class="bi bi-search ml-2 text-sm"></i>`;
+                btnSubmit.disabled = false;
+                btnSubmit.classList.remove('opacity-80');
+
+                // 3. Proses Pencarian (Nantinya logika ini diganti dengan filter array dari CSV Google Sheets)
+                const hasilPencarian = dataGoogleSheets.find(
+                    data => data.invoice === inputInvoice && data.email === inputEmail
+                );
+
+                // 4. Render Hasil ke Layar
+                renderHasil(hasilPencarian, inputInvoice);
+            }, 800);
+        }
+
+        // ==========================================
+        // FUNGSI RENDER UI BERDASARKAN STATUS
+        // ==========================================
+        function renderHasil(data, invoiceInput) {
+            const areaHasil = document.getElementById('area-hasil');
+            let htmlKonten = '';
+
+            if (!data) {
+                // TAMPILAN: DATA TIDAK DITEMUKAN
+                htmlKonten = `
+                    <div class="android-card p-6 text-center border-t-4 border-red-500 fade-in">
+                        <i class="bi bi-exclamation-circle text-4xl text-red-500 mb-2 block"></i>
+                        <h3 class="font-bold text-slate-900 mb-1">Pesanan Tidak Ditemukan</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed mb-4">Pastikan Nomor Invoice <strong>${invoiceInput}</strong> dan Alamat Email yang Anda masukkan sudah benar.</p>
+                        <button onclick="document.getElementById('input-invoice').focus()" class="text-xs font-semibold text-red-600 bg-red-50 px-4 py-2 rounded-xl">Coba Lagi</button>
+                    </div>
+                `;
+            } 
+            else if (data.status === "PENDING") {
+                // TAMPILAN: DATA DITEMUKAN NAMUN BELUM LUNAS
+                htmlKonten = `
+                    <div class="android-card p-5 fade-in relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-amber-400"></div>
+                        <div class="flex items-center justify-between mb-4 mt-1">
+                            <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-md uppercase tracking-wider">Menunggu Pembayaran</span>
+                            <span class="text-[10px] font-medium text-slate-400">${data.tanggal}</span>
+                        </div>
+                        
+                        <div class="flex items-center mb-4 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                            <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm mr-3">
+                                <i class="bi bi-box-seam text-slate-400 text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-slate-400 uppercase font-semibold">Produk</p>
+                                <h4 class="text-sm font-bold text-slate-800 line-clamp-1">${data.nama_produk}</h4>
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-slate-500 leading-relaxed text-center mb-4">
+                            Sistem mendeteksi pesanan Anda. Kami sedang memverifikasi pembayaran Anda secara manual. Mohon tunggu maksimal 15-30 menit.
+                        </p>
+
+                        <a href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20ingin%20konfirmasi%20pembayaran%20untuk%20Invoice:%20${data.invoice}" target="_blank" class="w-full bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-xl text-xs font-semibold flex justify-center items-center">
+                            <i class="bi bi-whatsapp mr-2 text-green-400"></i> Hubungi Admin via WA
+                        </a>
+                    </div>
+                `;
+            } 
+            else if (data.status === "LUNAS") {
+                // TAMPILAN: SUKSES / LUNAS (TOMBOL DOWNLOAD AKTIF)
+                htmlKonten = `
+                    <div class="android-card p-5 fade-in relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-green-500"></div>
+                        
+                        <div class="flex flex-col items-center text-center mt-2 mb-5">
+                            <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-2 shadow-[0_0_15px_rgba(34,197,94,0.3)]">
+                                <i class="bi bi-check-lg text-2xl font-bold"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-green-600 uppercase tracking-widest">Pembayaran Lunas</span>
+                        </div>
+                        
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 mb-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-[10px] text-slate-400 uppercase font-semibold">Invoice</span>
+                                <span class="text-[11px] font-bold text-slate-700">${data.invoice}</span>
+                            </div>
+                            <hr class="border-slate-200 my-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] text-slate-400 uppercase font-semibold">Produk</span>
+                                <span class="text-[11px] font-bold text-blue-600 text-right w-2/3 line-clamp-1">${data.nama_produk}</span>
+                            </div>
+                        </div>
+
+                        <a href="${data.link_download}" target="_blank" class="w-full bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-200 text-white py-3.5 rounded-xl text-sm font-semibold flex justify-center items-center transition-all">
+                            <i class="bi bi-cloud-download-fill mr-2"></i> Akses / Unduh Produk
+                        </a>
+                    </div>
+                `;
+            }
+
+            // Tampilkan elemen
+            areaHasil.innerHTML = htmlKonten;
+            areaHasil.classList.remove('hidden');
+            
+            // Gulir otomatis sedikit ke bawah agar hasil terlihat penuh di layar HP
+            setTimeout(() => {
+                areaHasil.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }, 100);
         }
     </script>
 </body>
