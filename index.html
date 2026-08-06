@@ -3,262 +3,437 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Unduhan | hzk.my.id</title>
+    <title>HZK Digital | Solusi Bisnis Digital</title>
     
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS untuk Styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Font & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Inter & Bootstrap Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: #f8f9fa;
+            background-color: #f4f5f7; /* Abu-abu sangat terang */
             -webkit-tap-highlight-color: transparent;
         }
         
-        /* Desain Kartu Clean ala Aplikasi Android */
+        /* Desain Kartu ala Android (Tetap dipertahankan) */
         .android-card { 
             background: #ffffff; 
-            border-radius: 20px; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
+            border-radius: 16px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
             border: 1px solid rgba(0,0,0,0.02);
+            transition: transform 0.2s ease;
         }
-
-        /* Form Input Styling */
-        .app-input {
-            width: 100%;
-            background-color: #f1f5f9;
-            border: 1.5px solid transparent;
-            border-radius: 14px;
-            padding: 14px 16px;
-            font-size: 14px;
-            color: #1e293b;
-            transition: all 0.2s ease;
+        .android-card:active {
+            transform: scale(0.98);
         }
-        .app-input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            background-color: #ffffff;
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        
+        /* Bottom Navigation Bar */
+        .bottom-nav { 
+            border-top: 1px solid #e5e7eb; 
+            padding-bottom: env(safe-area-inset-bottom);
         }
-
-        /* Transisi halus antar elemen */
-        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        
+        /* Logic SPA (Single Page Application) */
+        .page-section { display: none; animation: fadeIn 0.3s ease; }
+        .page-section.active { display: block; }
+        
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Kustomisasi Scrollbar untuk area deskripsi/katalog */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 </head>
-<body class="text-slate-800 min-h-screen flex flex-col">
+<body class="text-gray-800 pb-20">
 
-    <!-- TOP APP BAR -->
-    <header class="bg-white shadow-sm sticky top-0 z-50 px-4 py-4 flex justify-center items-center">
-        <div class="font-bold text-lg tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            download.hzk.my.id
+    <!-- TOP APP BAR (Warna Putih & Gradasi Hijau-Kuning) -->
+    <header class="bg-white shadow-[0_2px_10px_rgba(0,0,0,0.04)] sticky top-0 z-50 px-4 py-3.5 flex justify-between items-center">
+        <!-- Logo Text dengan Gradasi -->
+        <div class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-emerald-600 to-yellow-500 bg-clip-text text-transparent">
+            hzk.my.id
+        </div>
+        <!-- Indikator Google Sheets -->
+        <div class="text-[10px] font-bold text-gray-500 bg-gray-100 px-2.5 py-1.5 rounded-full flex items-center border border-gray-200">
+            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1.5 animate-pulse"></span> DB Terhubung
         </div>
     </header>
 
     <!-- AREA KONTEN UTAMA -->
-    <main class="flex-grow max-w-md w-full mx-auto mt-6 px-4 pb-12">
+    <main class="max-w-md mx-auto mt-5 px-4">
         
-        <!-- Header Text -->
-        <div class="text-center mb-6">
-            <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-full mx-auto flex items-center justify-center mb-3">
-                <i class="bi bi-cloud-arrow-down-fill text-2xl"></i>
-            </div>
-            <h1 class="text-xl font-bold text-slate-900 mb-1">Akses Produk Digital</h1>
-            <p class="text-xs text-slate-500">Masukkan nomor invoice dan email yang digunakan saat checkout untuk mengunduh pesanan Anda.</p>
-        </div>
-
-        <!-- FORM KARTU PENCARIAN -->
-        <div class="android-card p-5 mb-5">
-            <form id="form-cek-pesanan" onsubmit="prosesCekPesanan(event)">
-                <div class="mb-4">
-                    <label class="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5 ml-1">Nomor Invoice</label>
-                    <input type="text" id="input-invoice" class="app-input" placeholder="Contoh: INV-150124" required autocomplete="off">
-                </div>
+        <!-- ========================================== -->
+        <!-- 1. HALAMAN HOME / LANDING PAGE             -->
+        <!-- ========================================== -->
+        <section id="home" class="page-section active">
+            <!-- Hero Card dengan Gradasi Halus -->
+            <div class="android-card bg-gradient-to-br from-gray-900 to-black p-6 mb-6 text-center relative overflow-hidden">
+                <!-- Aksen Dekorasi Kuning -->
+                <div class="absolute -top-10 -right-10 w-24 h-24 bg-yellow-400 rounded-full opacity-20 blur-xl"></div>
+                <div class="absolute -bottom-10 -left-10 w-24 h-24 bg-emerald-500 rounded-full opacity-20 blur-xl"></div>
                 
-                <div class="mb-5">
-                    <label class="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5 ml-1">Alamat Email</label>
-                    <input type="email" id="input-email" class="app-input" placeholder="Masukkan email Anda" required autocomplete="email">
+                <div class="w-14 h-14 bg-emerald-500 text-white rounded-2xl mx-auto flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/30">
+                    <i class="bi bi-rocket-takeoff-fill text-2xl"></i>
                 </div>
-
-                <button type="submit" id="btn-submit" class="w-full bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white py-3.5 rounded-2xl text-sm font-semibold transition-all flex justify-center items-center">
-                    <span>Cek Pesanan Saya</span>
-                    <i class="bi bi-search ml-2 text-sm"></i>
+                <h1 class="text-2xl font-extrabold mb-2 text-white tracking-tight">Katalog Digital <span class="text-yellow-400">Premium</span></h1>
+                <p class="text-sm text-gray-300 mb-6 leading-relaxed">Tingkatkan efisiensi bisnismu dengan koleksi Web App dan Template Google Sheets siap pakai.</p>
+                
+                <button onclick="nav('katalog')" class="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-6 py-3 rounded-full text-sm font-bold w-full transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center">
+                    Eksplorasi Produk <i class="bi bi-arrow-right-short ml-1 text-lg"></i>
                 </button>
-            </form>
-        </div>
+            </div>
 
-        <!-- AREA HASIL PENCARIAN (Awalnya Disembunyikan) -->
-        <div id="area-hasil" class="hidden">
-            <!-- Konten Hasil akan dirender oleh JavaScript di sini -->
-        </div>
+            <div class="flex items-center justify-between mb-4 mt-2">
+                <h2 class="font-bold text-gray-900">Rekomendasi Utama</h2>
+                <button onclick="nav('katalog')" class="text-xs font-semibold text-emerald-600">Lihat Semua</button>
+            </div>
+
+            <!-- Menampilkan 2 produk unggulan (akan diisi otomatis oleh JS) -->
+            <div id="home-featured-container" class="grid grid-cols-2 gap-3.5 mb-6"></div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 2. HALAMAN KATALOG PRODUK                  -->
+        <!-- ========================================== -->
+        <section id="katalog" class="page-section">
+            <div class="mb-5">
+                <h2 class="font-bold text-xl text-gray-900">Katalog Lengkap</h2>
+                <p class="text-xs text-gray-500 mt-1">Pilih sistem digital sesuai kebutuhanmu.</p>
+            </div>
+            
+            <!-- Filter Kategori (UI Hijau/Hitam/Abu) -->
+            <div class="flex space-x-2 overflow-x-auto pb-3 mb-2 no-scrollbar">
+                <button class="bg-gray-900 text-white px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">Semua</button>
+                <button class="bg-white border border-gray-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">Web App</button>
+                <button class="bg-white border border-gray-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">Google Sheets</button>
+                <button class="bg-white border border-gray-200 text-gray-600 px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">E-Book (PDF)</button>
+            </div>
+
+            <!-- Kontainer Grid Produk -->
+            <div id="katalog-container" class="grid grid-cols-2 gap-3.5">
+                <!-- Produk di-render via JavaScript dari data Google Sheets -->
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 3. HALAMAN DEMO & DETAIL PRODUK            -->
+        <!-- ========================================== -->
+        <section id="demo" class="page-section">
+            <button onclick="nav('katalog')" class="text-sm text-gray-500 mb-4 flex items-center font-semibold bg-white px-3 py-1.5 rounded-full shadow-sm border border-gray-100">
+                <i class="bi bi-arrow-left-short text-lg mr-1"></i> Kembali
+            </button>
+            
+            <div class="android-card p-5 mb-4" id="detail-produk-container">
+                <!-- Konten detail produk akan dimuat oleh JavaScript -->
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 4. HALAMAN PROFIL PERUSAHAAN               -->
+        <!-- ========================================== -->
+        <section id="profil" class="page-section">
+            <div class="android-card p-6 border-t-4 border-emerald-500 text-center">
+                <div class="w-20 h-20 bg-gray-100 rounded-full mx-auto mb-3 flex items-center justify-center border-4 border-white shadow-md">
+                    <span class="font-extrabold text-3xl bg-gradient-to-br from-emerald-500 to-yellow-500 bg-clip-text text-transparent">H</span>
+                </div>
+                <h3 class="font-bold text-lg text-gray-900 mb-1">HZK Digital Studio</h3>
+                <p class="text-xs font-medium text-emerald-600 mb-5 bg-emerald-50 inline-block px-3 py-1 rounded-full">Developer & Creator</p>
+                
+                <p class="text-sm text-gray-600 leading-relaxed mb-6">
+                    Kami berfokus pada perancangan antarmuka aplikasi Android yang bersih dan sistem berbasis Google Sheets yang mudah dikelola, cepat, dan aman.
+                </p>
+
+                <div class="text-left bg-gray-50 p-4 rounded-xl border border-gray-100">
+                    <h4 class="text-xs font-bold text-gray-900 mb-2 uppercase tracking-wide">Layanan Kami</h4>
+                    <ul class="text-xs text-gray-600 space-y-2">
+                        <li class="flex items-center"><i class="bi bi-check-circle-fill text-emerald-500 mr-2"></i> Pengembangan Web App</li>
+                        <li class="flex items-center"><i class="bi bi-check-circle-fill text-yellow-500 mr-2"></i> Template Otomatisasi Sheets</li>
+                        <li class="flex items-center"><i class="bi bi-check-circle-fill text-gray-800 mr-2"></i> Desain UI/UX Clean Material</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
     </main>
 
-    <!-- FOOTER -->
-    <footer class="mt-auto py-6 text-center text-[10px] font-medium text-slate-400">
-        &copy; 2026 HZK Digital. All rights reserved.
-    </footer>
+    <!-- ========================================== -->
+    <!-- BOTTOM NAVIGATION (Gaya Aplikasi)          -->
+    <!-- ========================================== -->
+    <nav class="bottom-nav fixed bottom-0 w-full bg-white flex justify-around py-2 z-50 shadow-[0_-10px_20px_rgba(0,0,0,0.03)]">
+        <button onclick="nav('home')" class="nav-btn flex flex-col items-center w-1/3 pt-1 text-emerald-600" id="nav-home">
+            <i class="bi bi-house-door-fill text-xl mb-0.5"></i>
+            <span class="text-[10px] font-bold">Beranda</span>
+        </button>
+        <button onclick="nav('katalog')" class="nav-btn flex flex-col items-center w-1/3 pt-1 text-gray-400" id="nav-katalog">
+            <i class="bi bi-grid text-xl mb-0.5"></i>
+            <span class="text-[10px] font-semibold">Katalog</span>
+        </button>
+        <button onclick="nav('profil')" class="nav-btn flex flex-col items-center w-1/3 pt-1 text-gray-400" id="nav-profil">
+            <i class="bi bi-person text-xl mb-0.5"></i>
+            <span class="text-[10px] font-semibold">Profil</span>
+        </button>
+    </nav>
 
-    <!-- LOGIKA JAVASCRIPT & DATABASE GOOGLE SHEETS -->
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT SYSTEM & DUMMY DATA             -->
+    <!-- ========================================== -->
     <script>
-        // ==========================================
-        // DUMMY DATABASE (Simulasi Google Sheets)
-        // Struktur ini disiapkan agar nantinya mudah diubah menjadi fetch() ke file CSV Google Sheets,
-        // memastikan arsitektur data tetap menggunakan Sheets dan tidak beralih ke backend eksternal.
-        // ==========================================
-        const dataGoogleSheets = [
+        // Simulasi Database Google Sheets (Nanti tinggal di-fetch dari CSV sungguhan)
+        // Dilarang keras memindahkan struktur ini ke Firebase. Tetap gunakan logika array/Sheets ini.
+        const dbProduk = [
             {
-                invoice: "INV-150124",
-                email: "budi@gmail.com",
-                nama_produk: "Aplikasi Kasir V5.0.9",
+                id: "P001",
+                nama: "Aplikasi Kasir V5.0.9",
                 kategori: "Web App",
-                status: "LUNAS",
-                link_download: "https://drive.google.com/drive/folders/contoh-link-lunas",
-                tanggal: "06 Agu 2026"
+                harga: 150000,
+                icon: "bi-calculator",
+                warnaIkon: "text-emerald-500",
+                deskripsi: "Sistem point of sales (POS) ringan dengan antarmuka bersih bergaya Android. Dilengkapi fitur cetak struk Bluetooth dan rekap omzet harian.",
+                linkDemo: "https://example.com/demo-kasir",
+                tipeDemo: "link", // link atau pdf
+                versiTerbaru: "v5.0.9",
+                changelog: [
+                    { versi: "v5.0.9", detail: "Perbaikan integrasi PDF viewer dan tambahan opsi Dropdown pembaruan." },
+                    { versi: "v5.0.8", detail: "Perbaikan masalah sinkronisasi Google Sheets dan perbaikan layout agar lebih bersih." }
+                ]
             },
             {
-                invoice: "INV-150999",
-                email: "siti@yahoo.com",
-                nama_produk: "Template Excel Laporan Keuangan",
-                kategori: "Template",
-                status: "PENDING",
-                link_download: "",
-                tanggal: "06 Agu 2026"
+                id: "P002",
+                nama: "Jadwal Belajar Interaktif",
+                kategori: "Web App",
+                harga: 75000,
+                icon: "bi-calendar-check",
+                warnaIkon: "text-yellow-500",
+                deskripsi: "Platform PWA pencatat jadwal belajar harian dengan fitur penghitung mundur (countdown timer) dan sinkronisasi data yang sempurna.",
+                linkDemo: "https://example.com/demo-jadwal",
+                tipeDemo: "link",
+                versiTerbaru: "v2.1",
+                changelog: [
+                    { versi: "v2.1", detail: "Memperbaiki bug countdown issue dan implementasi fungsi PWA." }
+                ]
+            },
+            {
+                id: "P003",
+                nama: "BelanjApp - Manajemen Stok",
+                kategori: "Web App",
+                harga: 125000,
+                icon: "bi-box-seam",
+                warnaIkon: "text-emerald-600",
+                deskripsi: "Aplikasi pencatatan barang masuk dan keluar dengan desain cards UI yang user-friendly layaknya aplikasi Android native.",
+                linkDemo: "https://example.com/demo-belanjapp",
+                tipeDemo: "link",
+                versiTerbaru: "v1.5",
+                changelog: [
+                    { versi: "v1.5", detail: "Optimasi sistem transaksi yang langsung tersimpan rapi ke Google Sheets." }
+                ]
+            },
+            {
+                id: "P004",
+                nama: "Sistem Keuangan UMKM",
+                kategori: "Google Sheets",
+                harga: 50000,
+                icon: "bi-file-earmark-spreadsheet",
+                warnaIkon: "text-green-600",
+                deskripsi: "Template spreadsheet cerdas dengan formula otomatis untuk menghitung laba rugi, arus kas, dan neraca tanpa perlu skill akuntansi.",
+                linkDemo: "https://docs.google.com/spreadsheets/",
+                tipeDemo: "link",
+                versiTerbaru: null,
+                changelog: []
+            },
+            {
+                id: "P005",
+                nama: "E-Book: Arsitektur UI Mobile",
+                kategori: "E-Book (PDF)",
+                harga: 0, // Gratis
+                icon: "bi-filetype-pdf",
+                warnaIkon: "text-red-500",
+                deskripsi: "Buku panduan PDF setebal 45 halaman yang membahas cara merancang layout aplikasi web yang responsif, bersih, dan mudah digunakan.",
+                linkDemo: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                tipeDemo: "pdf",
+                versiTerbaru: null,
+                changelog: []
+            },
+            {
+                id: "P006",
+                nama: "Generator Invoice Otomatis",
+                kategori: "Google Sheets",
+                harga: 35000,
+                icon: "bi-receipt-cutoff",
+                warnaIkon: "text-gray-800",
+                deskripsi: "Buat nota dan tagihan pelanggan dalam hitungan detik. Cukup masukkan nama barang, PDF tagihan langsung terbentuk.",
+                linkDemo: "https://docs.google.com/spreadsheets/",
+                tipeDemo: "link",
+                versiTerbaru: null,
+                changelog: []
             }
         ];
 
-        // ==========================================
-        // FUNGSI UTAMA PENCARIAN
-        // ==========================================
-        function prosesCekPesanan(event) {
-            event.preventDefault(); // Mencegah halaman reload
-
-            const inputInvoice = document.getElementById('input-invoice').value.trim().toUpperCase();
-            const inputEmail = document.getElementById('input-email').value.trim().toLowerCase();
-            const btnSubmit = document.getElementById('btn-submit');
-            const areaHasil = document.getElementById('area-hasil');
-
-            // 1. Tampilkan status Loading pada tombol
-            btnSubmit.innerHTML = `<div class="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2"></div> Memeriksa Data...`;
-            btnSubmit.disabled = true;
-            btnSubmit.classList.add('opacity-80');
-            
-            // Sembunyikan area hasil jika sebelumnya terbuka
-            areaHasil.classList.add('hidden');
-            areaHasil.classList.remove('fade-in');
-
-            // 2. Simulasi Jeda Loading (agar terasa proses fetching database)
-            setTimeout(() => {
-                // Kembalikan tombol ke semula
-                btnSubmit.innerHTML = `<span>Cek Pesanan Saya</span> <i class="bi bi-search ml-2 text-sm"></i>`;
-                btnSubmit.disabled = false;
-                btnSubmit.classList.remove('opacity-80');
-
-                // 3. Proses Pencarian (Nantinya logika ini diganti dengan filter array dari CSV Google Sheets)
-                const hasilPencarian = dataGoogleSheets.find(
-                    data => data.invoice === inputInvoice && data.email === inputEmail
-                );
-
-                // 4. Render Hasil ke Layar
-                renderHasil(hasilPencarian, inputInvoice);
-            }, 800);
+        // Format Uang Rupiah
+        function formatRupiah(angka) {
+            if (angka === 0) return "GRATIS";
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
         }
 
-        // ==========================================
-        // FUNGSI RENDER UI BERDASARKAN STATUS
-        // ==========================================
-        function renderHasil(data, invoiceInput) {
-            const areaHasil = document.getElementById('area-hasil');
-            let htmlKonten = '';
+        // Fungsi Render Kartu Produk
+        function buatKartuProduk(produk) {
+            const badgeWarna = produk.kategori === "Web App" ? "text-emerald-700 bg-emerald-50 border-emerald-100" :
+                               produk.kategori.includes("PDF") ? "text-red-700 bg-red-50 border-red-100" :
+                               "text-yellow-700 bg-yellow-50 border-yellow-100";
 
-            if (!data) {
-                // TAMPILAN: DATA TIDAK DITEMUKAN
-                htmlKonten = `
-                    <div class="android-card p-6 text-center border-t-4 border-red-500 fade-in">
-                        <i class="bi bi-exclamation-circle text-4xl text-red-500 mb-2 block"></i>
-                        <h3 class="font-bold text-slate-900 mb-1">Pesanan Tidak Ditemukan</h3>
-                        <p class="text-xs text-slate-500 leading-relaxed mb-4">Pastikan Nomor Invoice <strong>${invoiceInput}</strong> dan Alamat Email yang Anda masukkan sudah benar.</p>
-                        <button onclick="document.getElementById('input-invoice').focus()" class="text-xs font-semibold text-red-600 bg-red-50 px-4 py-2 rounded-xl">Coba Lagi</button>
+            return `
+                <div class="android-card p-3.5 cursor-pointer flex flex-col justify-between" onclick="bukaDetailProduk('${produk.id}')">
+                    <div>
+                        <div class="bg-gray-50 h-24 rounded-xl mb-3 flex flex-col items-center justify-center border border-gray-100">
+                            <i class="bi ${produk.icon} text-3xl ${produk.warnaIkon} mb-1"></i>
+                        </div>
+                        <span class="text-[9px] font-bold ${badgeWarna} border px-2 py-0.5 rounded-md mb-2 inline-block uppercase tracking-wider">${produk.kategori}</span>
+                        <h3 class="font-bold text-[13px] leading-tight text-gray-900 line-clamp-2 mb-1">${produk.nama}</h3>
                     </div>
-                `;
-            } 
-            else if (data.status === "PENDING") {
-                // TAMPILAN: DATA DITEMUKAN NAMUN BELUM LUNAS
-                htmlKonten = `
-                    <div class="android-card p-5 fade-in relative overflow-hidden">
-                        <div class="absolute top-0 left-0 w-full h-1 bg-amber-400"></div>
-                        <div class="flex items-center justify-between mb-4 mt-1">
-                            <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-md uppercase tracking-wider">Menunggu Pembayaran</span>
-                            <span class="text-[10px] font-medium text-slate-400">${data.tanggal}</span>
-                        </div>
-                        
-                        <div class="flex items-center mb-4 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                            <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm mr-3">
-                                <i class="bi bi-box-seam text-slate-400 text-lg"></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-slate-400 uppercase font-semibold">Produk</p>
-                                <h4 class="text-sm font-bold text-slate-800 line-clamp-1">${data.nama_produk}</h4>
-                            </div>
-                        </div>
-
-                        <p class="text-xs text-slate-500 leading-relaxed text-center mb-4">
-                            Sistem mendeteksi pesanan Anda. Kami sedang memverifikasi pembayaran Anda secara manual. Mohon tunggu maksimal 15-30 menit.
-                        </p>
-
-                        <a href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20ingin%20konfirmasi%20pembayaran%20untuk%20Invoice:%20${data.invoice}" target="_blank" class="w-full bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-xl text-xs font-semibold flex justify-center items-center">
-                            <i class="bi bi-whatsapp mr-2 text-green-400"></i> Hubungi Admin via WA
-                        </a>
+                    <div class="mt-2 pt-2 border-t border-gray-100">
+                        <span class="font-extrabold text-sm text-gray-900">${formatRupiah(produk.harga)}</span>
                     </div>
-                `;
-            } 
-            else if (data.status === "LUNAS") {
-                // TAMPILAN: SUKSES / LUNAS (TOMBOL DOWNLOAD AKTIF)
-                htmlKonten = `
-                    <div class="android-card p-5 fade-in relative overflow-hidden">
-                        <div class="absolute top-0 left-0 w-full h-1 bg-green-500"></div>
-                        
-                        <div class="flex flex-col items-center text-center mt-2 mb-5">
-                            <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-2 shadow-[0_0_15px_rgba(34,197,94,0.3)]">
-                                <i class="bi bi-check-lg text-2xl font-bold"></i>
-                            </div>
-                            <span class="text-[11px] font-bold text-green-600 uppercase tracking-widest">Pembayaran Lunas</span>
-                        </div>
-                        
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 mb-4">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-[10px] text-slate-400 uppercase font-semibold">Invoice</span>
-                                <span class="text-[11px] font-bold text-slate-700">${data.invoice}</span>
-                            </div>
-                            <hr class="border-slate-200 my-2">
-                            <div class="flex justify-between items-center">
-                                <span class="text-[10px] text-slate-400 uppercase font-semibold">Produk</span>
-                                <span class="text-[11px] font-bold text-blue-600 text-right w-2/3 line-clamp-1">${data.nama_produk}</span>
-                            </div>
-                        </div>
+                </div>
+            `;
+        }
 
-                        <a href="${data.link_download}" target="_blank" class="w-full bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-200 text-white py-3.5 rounded-xl text-sm font-semibold flex justify-center items-center transition-all">
-                            <i class="bi bi-cloud-download-fill mr-2"></i> Akses / Unduh Produk
-                        </a>
-                    </div>
+        // Inisialisasi Tampilan Awal
+        document.addEventListener('DOMContentLoaded', () => {
+            // Render 2 produk ke Home
+            const homeContainer = document.getElementById('home-featured-container');
+            homeContainer.innerHTML = buatKartuProduk(dbProduk[0]) + buatKartuProduk(dbProduk[1]);
+
+            // Render semua produk ke Katalog
+            const katalogContainer = document.getElementById('katalog-container');
+            katalogContainer.innerHTML = dbProduk.map(p => buatKartuProduk(p)).join('');
+        });
+
+        // Logika SPA Navigasi
+        function nav(targetId) {
+            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(targetId).classList.add('active');
+            
+            // Reset Bottom Nav (Abu-abu)
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = "nav-btn flex flex-col items-center w-1/3 pt-1 text-gray-400";
+                btn.querySelector('span').classList.replace('font-bold', 'font-semibold');
+                let icon = btn.querySelector('i');
+                icon.className = icon.className.replace('-fill', '');
+            });
+
+            // Aktifkan tombol yang dipilih (Hijau)
+            const activeBtn = document.getElementById('nav-' + (targetId === 'demo' ? 'katalog' : targetId));
+            if(activeBtn) {
+                activeBtn.className = "nav-btn flex flex-col items-center w-1/3 pt-1 text-emerald-600";
+                activeBtn.querySelector('span').classList.replace('font-semibold', 'font-bold');
+                let icon = activeBtn.querySelector('i');
+                if(!icon.className.includes('-fill')) icon.className = icon.className.replace('bi-', 'bi-').split(' ')[0] + '-fill ' + icon.className.split(' ').slice(1).join(' ');
+            }
+            window.scrollTo(0, 0);
+        }
+
+        // Buka Halaman Detail Produk
+        function bukaDetailProduk(id) {
+            const produk = dbProduk.find(p => p.id === id);
+            const container = document.getElementById('detail-produk-container');
+            
+            // Konfigurasi Tombol Demo
+            let btnDemoHtml = '';
+            if (produk.tipeDemo === 'pdf') {
+                btnDemoHtml = `
+                    <a href="${produk.linkDemo}" target="_blank" class="w-full border border-gray-200 hover:bg-gray-50 text-gray-700 py-3 rounded-xl text-xs font-bold flex justify-center items-center transition-colors mb-3">
+                        <i class="bi bi-file-earmark-pdf text-red-500 text-lg mr-2"></i> Buka Dokumen PDF (Tab Baru)
+                    </a>`;
+            } else {
+                btnDemoHtml = `
+                    <a href="${produk.linkDemo}" target="_blank" class="w-full bg-gray-900 hover:bg-black text-white py-3 rounded-xl text-xs font-bold flex justify-center items-center transition-colors mb-3 shadow-lg shadow-gray-200">
+                        <i class="bi bi-play-fill text-yellow-400 text-lg mr-2"></i> Akses Live Demo
+                    </a>`;
+            }
+
+            // Konfigurasi Changelog Dropdown
+            let changelogHtml = '';
+            if (produk.changelog && produk.changelog.length > 0) {
+                let listLi = produk.changelog.map((log, index) => `
+                    <li class="relative pl-3 before:absolute before:-left-[5px] before:top-1.5 before:w-2.5 before:h-2.5 before:rounded-full ${index === 0 ? 'before:bg-emerald-500' : 'before:bg-gray-300'}">
+                        <span class="font-bold text-gray-800">${log.versi}:</span> ${log.detail}
+                    </li>
+                `).join('');
+
+                changelogHtml = `
+                    <details class="text-sm group mt-4">
+                        <summary class="font-semibold text-gray-800 cursor-pointer outline-none list-none flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-100">
+                            Catatan Pembaruan (Changelog)
+                            <i class="bi bi-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="mt-2 bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+                            <ul class="text-gray-600 text-[11px] space-y-3 relative pl-2 before:absolute before:left-0 before:top-1.5 before:bottom-1.5 before:w-[2px] before:bg-gray-200">
+                                ${listLi}
+                            </ul>
+                        </div>
+                    </details>
                 `;
             }
 
-            // Tampilkan elemen
-            areaHasil.innerHTML = htmlKonten;
-            areaHasil.classList.remove('hidden');
+            container.innerHTML = `
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-[10px] font-bold text-gray-600 bg-gray-100 px-2.5 py-1 rounded-md uppercase tracking-wider">${produk.kategori}</span>
+                    ${produk.versiTerbaru ? `<span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-1 rounded-md">${produk.versiTerbaru}</span>` : ''}
+                </div>
+                
+                <div class="flex items-start mb-4">
+                    <div class="w-14 h-14 bg-gray-50 rounded-xl flex items-center justify-center border border-gray-100 shrink-0 mr-4">
+                        <i class="bi ${produk.icon} text-3xl ${produk.warnaIkon}"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-extrabold text-xl text-gray-900 leading-tight mb-1">${produk.nama}</h2>
+                        <span class="font-extrabold text-emerald-600 text-lg">${formatRupiah(produk.harga)}</span>
+                    </div>
+                </div>
+                
+                <p class="text-xs text-gray-600 mb-5 leading-relaxed bg-gray-50 p-3 rounded-xl border border-gray-100">
+                    ${produk.deskripsi}
+                </p>
+                
+                ${btnDemoHtml}
+                
+                <button onclick="prosesBeli('${produk.nama}', ${produk.harga})" class="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white py-3.5 rounded-xl text-sm font-bold flex justify-center items-center transition-all shadow-lg shadow-emerald-500/30">
+                    <i class="bi bi-cart-check-fill mr-2 text-lg"></i> Pesan via WhatsApp
+                </button>
+                
+                ${changelogHtml}
+            `;
+            nav('demo');
+        }
+
+        // Logika Checkout (Kode Unik + WA)
+        function prosesBeli(namaProduk, hargaAsli) {
+            if (hargaAsli === 0) {
+                alert('Produk ini gratis. Anda akan diarahkan ke halaman unduhan langsung.');
+                return;
+            }
+
+            // Generate Kode Unik 3 Digit (100 - 999)
+            const kodeUnik = Math.floor(Math.random() * 900) + 100;
+            const totalBayar = hargaAsli + kodeUnik;
             
-            // Gulir otomatis sedikit ke bawah agar hasil terlihat penuh di layar HP
-            setTimeout(() => {
-                areaHasil.scrollIntoView({ behavior: 'smooth', block: 'end' });
-            }, 100);
+            const teksWA = encodeURIComponent(
+                `Halo Admin hzk.my.id, saya ingin memesan:\n\n` +
+                `📦 *Produk:* ${namaProduk}\n` +
+                `💵 *Harga:* Rp ${hargaAsli.toLocaleString('id-ID')}\n` +
+                `🔢 *Kode Unik:* Rp ${kodeUnik}\n` +
+                `💰 *Total Transfer:* *Rp ${totalBayar.toLocaleString('id-ID')}*\n\n` +
+                `Mohon instruksi nomor rekening untuk pembayaran. Saya paham harus mentransfer sesuai 3 digit angka terakhir agar diproses otomatis.`
+            );
+
+            const nomorWA = "6281234567890"; // Ganti dengan nomormu
+            window.open(`https://wa.me/${nomorWA}?text=${teksWA}`, '_blank');
         }
     </script>
 </body>
